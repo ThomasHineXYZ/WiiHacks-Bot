@@ -6,7 +6,7 @@ class Example(commands.Cog):
         self.client = client
 
     @commands.command()
-    async def test(self, ctx):
+    async def example(self, ctx):
         await ctx.send('Hoorah!')
 
 def setup(client):

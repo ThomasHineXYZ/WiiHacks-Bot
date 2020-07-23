@@ -21,16 +21,14 @@ client = commands.Bot(command_prefix = os.environ['COMMAND_PREFIX'])
 
 @client.event
 async def on_ready():
+    status = client.get_cog('Status')
     if os.environ['DEBUG'].lower() == 'true':
-        await client.change_presence(
-            activity=discord.Game('around in debug mode.'),
-            status=discord.Status.idle
-        )
+        await status.set_status("idle")
+        await status.set_activity("playing around in debug mode.")
+
     else:
-        await client.change_presence(
-            activity=discord.Activity(type=discord.ActivityType.listening, name="your input."),
-            status=discord.Status.online
-        )
+        await status.set_status("online")
+        await status.set_activity("listening your input.")
 
     print("Bot is ready.")
 
