@@ -21,6 +21,17 @@ client = commands.Bot(command_prefix = os.environ['COMMAND_PREFIX'])
 
 @client.event
 async def on_ready():
+    if os.environ['DEBUG'].lower() == 'true':
+        await client.change_presence(
+            activity=discord.Game('around in debug mode.'),
+            status=discord.Status.idle
+        )
+    else:
+        await client.change_presence(
+            activity=discord.Activity(type=discord.ActivityType.listening, name="your input."),
+            status=discord.Status.online
+        )
+
     print("Bot is ready.")
 
 @client.command()
@@ -31,19 +42,19 @@ async def ping(ctx):
 if os.environ['DEBUG'].lower() == 'true':
     @client.command()
     async def load(ctx, extension):
-        print('Loading {extension}')
+        print(f'Loading {extension}')
         await ctx.send(f'Loading {extension}')
         client.load_extension(f'cogs.{extension}')
 
     @client.command()
     async def unload(ctx, extension):
-        print('Unloading {extension}')
+        print(f'Unloading {extension}')
         await ctx.send(f'Unloading {extension}')
         client.unload_extension(f'cogs.{extension}')
 
     @client.command()
     async def reload(ctx, extension):
-        print('Reloading {extension}')
+        print(f'Reloading {extension}')
         await ctx.send(f'Reloading {extension}')
         client.unload_extension(f'cogs.{extension}')
         client.load_extension(f'cogs.{extension}')

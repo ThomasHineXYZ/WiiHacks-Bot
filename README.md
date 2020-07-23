@@ -18,4 +18,5 @@ We're licensed under MIT
 
 ## Credits
 * [BloodyThorn](https://github.com/bloodythorn) and his [WiiHacky](https://github.com/bloodythorn/wiihacky/) project and inspiration to work on this.
-* [discord.py](https://github.com/Rapptz/discord.py) for the basis of this project
+* [discord.py](https://github.com/Rapptz/discord.py) for the basis of this project.
+* [Lucas's Python.py YouTube Tutorial series](https://www.youtube.com/playlist?list=PLW3GfRiBCHOhfVoiDZpSz8SM_HybXRPzZ) for the help with starting and setting this up.
