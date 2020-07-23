@@ -17,10 +17,14 @@ if os.path.isfile(local_env_file_name):
     load_dotenv(dotenv_path=local_env_path, override=True)
 
 # Start up the bot
-client = commands.Bot(command_prefix = os.environ['COMMAND_CHARACTERS'])
+client = commands.Bot(command_prefix = os.environ['COMMAND_PREFIX'])
 
 @client.event
 async def on_ready():
     print("Bot is ready.")
+
+@client.command()
+async def ping(ctx):
+    await ctx.send(f'Pong! {round(client.latency * 1000)}ms')
 
 client.run(os.environ['DISCORD_BOT_TOKEN'])
