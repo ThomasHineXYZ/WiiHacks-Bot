@@ -2,6 +2,7 @@
 run/
 onholdcode/
 bot/cogs/test.py
+test.py
 
 # Sublime Project Files
 *sublime-*
