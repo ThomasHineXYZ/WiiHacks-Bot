@@ -32,6 +32,31 @@ async def on_ready():
 
     print("Bot is ready.")
 
+@client.event
+async def on_command_error(ctx, exc):
+    IGNORE_EXCEPTIONS = (commands.CommandNotFound, commands.BadArgument)
+    if any([isinstance(exc, error) for error in IGNORE_EXCEPTIONS]):
+        pass
+
+    elif isinstance(exc, commands.MissingRequiredArgument):
+        await ctx.send("One or more required arguments are missing.")
+
+    elif isinstance(exc, commands.CommandOnCooldown):
+        await ctx.send(f"That command is on {str(exc.cooldown.type).split('.')[-1]} cooldown. Try again in {exc.retry_after:,.2f} secs.")
+
+    elif hasattr(exc, "original"):
+        # if isinstance(exc.original, HTTPException):
+        #   await ctx.send("Unable to send message.")
+
+        if isinstance(exc.original, commands.Forbidden):
+            await ctx.send("I do not have permission to do that.")
+
+        else:
+            raise exc.original
+
+    else:
+        raise exc
+
 @client.command()
 async def ping(ctx):
     await ctx.send(f'Pong! {round(client.latency * 1000)}ms')

@@ -8,6 +8,7 @@ class GameList(commands.Cog):
         self.client = client
 
     @commands.command()
+    @commands.cooldown(1, 60, commands.BucketType.guild)
     async def gamelist(self, ctx):
         # Connect to the URL
         response = urllib.request.urlopen("https://wiimmfi.de/stat?m=20");
