@@ -58,6 +58,7 @@ class GameList(commands.Cog):
             title = "Wiimmfi Game List",
             thumbnail = "https://wiimmfi.de/images/wiimmfi-dark.png",
             content = output,
+            fields = fields
         ))
 
 def setup(client):
