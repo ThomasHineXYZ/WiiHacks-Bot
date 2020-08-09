@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup;
 from discord.ext import commands
 import discord
+import lib.embedder
 import urllib.request
 
 class GameList(commands.Cog):
@@ -43,13 +44,21 @@ class GameList(commands.Cog):
 
         # Generate the test for outputting
         output = ""
-        output += "```"
+        total_count = 0
         for name, players in gameList.items():
             output += f"{name}: {players}\n"
-        output += "```"
+            total_count += int(players)
 
-        await ctx.send(output)
+        fields = [
+            ("Total Online Users:", total_count, True),
+        ]
 
+        await ctx.send(embed = lib.embedder.make_embed(
+            type = "info",
+            title = "Wiimmfi Game List",
+            thumbnail = "https://wiimmfi.de/images/wiimmfi-dark.png",
+            content = output,
+        ))
 
 def setup(client):
     client.add_cog(GameList(client))
