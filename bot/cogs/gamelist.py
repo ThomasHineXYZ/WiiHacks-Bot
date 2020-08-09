@@ -22,7 +22,7 @@ class GameList(commands.Cog):
         soup = BeautifulSoup(response, "html.parser");
 
         # Iterate through each of the games in the list
-        gameList = {}
+        game_list = []
         for line in soup.find("table", id="game").find_all("tr"):
             # Set up the cells in to a usable list
             list = []
@@ -37,17 +37,20 @@ class GameList(commands.Cog):
             if list[4] == "—":
                 continue
 
-            # Add the game and the number of players to the dictionary
-            name = list[1]
-            players = list[4]
-            gameList[name] = players
+            # Add this game's info to the dictionary
+            game_list.append({
+                "id": list[0],
+                "name": list[1],
+                "players": list[4],
+                "total_logins": list[5]
+            })
 
         # Generate the test for outputting
         output = ""
         total_count = 0
-        for name, players in gameList.items():
-            output += f"{name}: {players}\n"
-            total_count += int(players)
+        for game in game_list:
+            output += f"{game['name']}: {game['players']}\n"
+            total_count += int(game['players'])
 
         fields = [
             ("Total Online Users:", total_count, True),
@@ -56,6 +59,7 @@ class GameList(commands.Cog):
         await ctx.send(embed = lib.embedder.make_embed(
             type = "info",
             title = "Wiimmfi Game List",
+            title_url = "https://wiimmfi.de/stat?m=8",
             thumbnail = "https://wiimmfi.de/images/wiimmfi-dark.png",
             content = output,
             fields = fields
